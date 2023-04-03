@@ -1,0 +1,47 @@
+* {
+  margin: 0;
+  border: 0;
+  font-family: "DINPro", "Helvetica Neue", sans-serif;
+}
+
+.calendarDay {
+  width: calc(100% / 5 - 20px); /* set width to 1/5th of the container's width minus some padding */
+  margin-bottom: 20px;  
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  height: 15rem;
+  width: 10rem;
+  border-radius: 10%;
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.2) ,0px 3px 7px rgba(0, 0, 0, 0.1);
+  padding: 0.5rem;
+}
+
+.calendarHeader {
+  padding-top: 1em;  
+  padding-bottom: 1em;  
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;  
+  background-color: #fafafa;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  font-weight: bold;
+}
+
+.calendarBody {
+  height: 100%;
+  background-color: #fafafa;
+  width: 100%;
+  justify-content: center;
+  text-align: center;
+  padding-top: 1rem;
+}
+
+.dayOfWeek {
+  padding-bottom: 1rem;
+}
