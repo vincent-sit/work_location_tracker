@@ -3,29 +3,19 @@ import Endpoints from "../../apiEndpoints";
 import "./index.css";
 
 const userId = "1";
-const url = "https://localhost:7227/api";
 
 const CalendarDay = ({day, date}) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [triggerEffect, setTriggerEffect] = useState(false);
   const [location, setLocation] = useState("");
   const scaleValue = isHovered ? 1.075 : 1;
   const dateParts = date.split("-");
-  const dd = dateParts[0];
-  const mm = dateParts[1];
-  const yy = dateParts[2];
+  // generates a datestring in the format of ""yy-mm-dd"
+  const newDateString = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`
 
-  // should automatically load the location on the day - but if it does not have an entry in the locationOnDate table, return empty string
-  // otherwise, return the location as text
-  // when clicked, pop up to allow edit - if edit is submitted, make change
-  // 1) if location does not exist for user, create location for user AND submit entry to locationOnDate table (need to make this into a single transaction)
-  // 2) if location exists, update entry to locationOnDate table
-  // once this is done - make useEffect update
-
-  // TODO: figure out why useEffect is being called twice
-  // load location of the day, return empty if no location found
   useEffect(() => {    
     async function getLocationIdAndSetLocation() {      
-      const fullUrl = `${Endpoints.GETTransactionByDateAndUser}?userid=${userId}&date=${yy}-${mm}-${dd}T00:00:00.000Z`;
+      const fullUrl = `${Endpoints.GETTransactionByDateAndUser}?userid=${userId}&date=${newDateString}T00:00:00.000Z`;
       try {
         await fetch(fullUrl)
           .then(response => {
@@ -49,17 +39,19 @@ const CalendarDay = ({day, date}) => {
       }
     }
     getLocationIdAndSetLocation();
-  }, [location]);
+  }, [location, triggerEffect]);
 
   // TODO: decide if a separate location table is necessary or should I just keep using location as its id?  
   const submitLocation = async (locationEntered) => {    
     // check to see if the location exists
     try {
-      // currently the problem is that the default response being null is throwing errors into the system
-      const getLocationResponse = await fetch(`${Endpoints.GETLocationByNameAndUser}?locationName=home&userId=1`);
-      // const getLocationResponse = await fetch(`${url}/Locations/nameAndUser?locationName=${locationEntered}&userId=${userId}`);      
-      const location = getLocationResponse ? await getLocationResponse.json() : null;
-    
+      // first check if day already has location allocated to it, if it does, then it's a potential update rather than create
+      // TODO: decide if remove old location or not, or just change entry? Probably best to change entry
+      const getLocationResponse = await fetch(`${Endpoints.GETLocationByNameAndUser}?locationName=${locationEntered}&userId=${userId}`);
+      // check if response is a valid found response
+      var location = getLocationResponse.status === 200 ? await getLocationResponse.json() : null;
+      console.log(location);
+
       if (!location) {
         const newLocation = { name: locationEntered, userId: userId };
         const newLocationResponse = await fetch(`${Endpoints.POSTNewLocation}`, {
@@ -69,8 +61,8 @@ const CalendarDay = ({day, date}) => {
         });
         location = await newLocationResponse.json();
       }
-
-      const newEntry = { UserId: `${userId}`, LocationId: `${location.id}`, Date: `${yy}-${mm}-${dd}T00:00:00.000Z`}
+            
+      const newEntry = { UserId: `${userId}`, LocationId: `${location.id}`, Date: `${newDateString}T00:00:00.000Z`}
       const newTransactionResponse = await fetch(`${Endpoints.POSTNewTransaction}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -82,18 +74,19 @@ const CalendarDay = ({day, date}) => {
         await fetch(`${Endpoints.DELETELocation}`, { method: 'DELETE' });
       }
     
-        // Return the result of the second API call
+      // Return the result of the second API call
       return newTransactionResponse.json();
     } catch (error) {
       console.error(error);
     }
   }
 
-  function handleClick() {
+  async function handleClick() {
     const locationEntered = prompt("What location will you be working from?");
     // if submission is empty, null or undefined, then ignore
     if (!locationEntered) return;
-    submitLocation(locationEntered);
+    await submitLocation(locationEntered);
+    setTriggerEffect(!triggerEffect);
   }
 
   function handleMouseOver() {
