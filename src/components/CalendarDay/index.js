@@ -62,7 +62,7 @@ const CalendarDay = ({day, date}) => {
     
       if (!location) {
         const newLocation = { name: locationEntered, userId: userId };
-        const newLocationResponse = await fetch(`${url}/locations`, {
+        const newLocationResponse = await fetch(`${Endpoints.POSTNewLocation}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newLocation)
@@ -71,7 +71,7 @@ const CalendarDay = ({day, date}) => {
       }
 
       const newEntry = { UserId: `${userId}`, LocationId: `${location.id}`, Date: `${yy}-${mm}-${dd}T00:00:00.000Z`}
-      const newTransactionResponse = await fetch(`${url}/UserLocation`, {
+      const newTransactionResponse = await fetch(`${Endpoints.POSTNewTransaction}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newEntry)
@@ -79,7 +79,7 @@ const CalendarDay = ({day, date}) => {
     
       // If second API call fails, rollback the first API call
       if (!newTransactionResponse.ok) {
-        await fetch(`/api/locations/${location.id}`, { method: 'DELETE' });
+        await fetch(`${Endpoints.DELETELocation}`, { method: 'DELETE' });
       }
     
         // Return the result of the second API call
