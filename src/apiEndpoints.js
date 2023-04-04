@@ -1,6 +1,7 @@
 const url = "https://localhost:7227/api";
 
 const Endpoints = {
+  GETUserById : `${url}/users`,
   GETLocationById : `${url}/locations/id`,
   GETLocationByNameAndUser: `${url}/locations/nameAndUser`,
   GETLocationsByUser : `${url}/locations/userId`,

@@ -2,8 +2,7 @@ import React, {useState, useEffect} from 'react';
 import { useUserId } from '../../contexts/UserIdContext';
 import Calendar from '../../components/Calendar';
 import "./index.css";
-
-const url = "https://localhost:7227/api";
+import Endpoints from '../../apiEndpoints';
 
 function findWorkDays (daysCount, includeWeekends) {
   const days = [];
@@ -32,8 +31,8 @@ const UserProfile = () => {
   
   // useEffect to get displayName from user ID and update displayName
   useEffect(() => {
-    async function getUserDataById(url, id) {
-      const fullUrl = `${url}/users/${id}`;
+    async function getUserDataById(id) {
+      const fullUrl = `${Endpoints.GETUserById}/${id}`;
       await fetch(fullUrl)
         .then(response => {
           if (response.ok) {
@@ -49,19 +48,19 @@ const UserProfile = () => {
         });
     }
     
-    getUserDataById(url, userId);
+    getUserDataById(userId);
   });
 
   useEffect(() => {
-    const getDaysToShowAndIncludeWeekends = async (url, id) => {
-      const fullUrl = `${url}/users/${id}`;
+    const getDaysToShowAndIncludeWeekends = async (id) => {
+      const fullUrl = `${Endpoints.GETUserById}/${id}`;
       const response = await fetch(fullUrl);
       const data = await response.json();
       setDaysToShow(Math.min(data.daysToShow, 14));
       setIncludeWeekends(data.includeWeekends);
     };
   
-    getDaysToShowAndIncludeWeekends(url, userId);
+    getDaysToShowAndIncludeWeekends(userId);
 
   });
   
