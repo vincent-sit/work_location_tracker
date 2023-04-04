@@ -1,5 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { UserIdProvider } from './contexts/UserIdContext';
 
 import App from './App';
 

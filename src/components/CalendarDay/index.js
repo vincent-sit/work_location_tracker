@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
+import { useUserId } from "../../contexts/UserIdContext";
 import Endpoints from "../../apiEndpoints";
 import "./index.css";
 
-const userId = "1";
 
 const CalendarDay = ({day, date}) => {
   const [isHovered, setIsHovered] = useState(false);
   const [triggerEffect, setTriggerEffect] = useState(false);
   const [location, setLocation] = useState("");
+  const userId = useUserId().userId;
   const scaleValue = isHovered ? 1.075 : 1;
   const dateParts = date.split("-");
   // generates a datestring in the format of ""yy-mm-dd"
@@ -18,7 +19,8 @@ const CalendarDay = ({day, date}) => {
       const fullUrl = `${Endpoints.GETTransactionByDateAndUser}?userid=${userId}&date=${newDateString}T00:00:00.000Z`;
       try {
         await fetch(fullUrl)
-          .then(response => {
+          .then(response => {            
+            if (response.status === 500) throw new Error("No location for this day has been set");
             return response.json();
           })
           .then(data => {
@@ -33,48 +35,59 @@ const CalendarDay = ({day, date}) => {
                 setLocation(data.name);
               })
           })
-      } catch (error) {
-        console.log("Error encountered. There is no location registered for this location.");
+      } catch (error) {        
         setLocation("");
       }
     }
     getLocationIdAndSetLocation();
   }, [location, triggerEffect]);
-
-  // TODO: decide if a separate location table is necessary or should I just keep using location as its id?  
+  
   const submitLocation = async (locationEntered) => {    
-    // check to see if the location exists
-    try {
+    try {      
       // first check if day already has location allocated to it, if it does, then it's a potential update rather than create
       // TODO: decide if remove old location or not, or just change entry? Probably best to change entry
       const getLocationResponse = await fetch(`${Endpoints.GETLocationByNameAndUser}?locationName=${locationEntered}&userId=${userId}`);
       // check if response is a valid found response
-      var location = getLocationResponse.status === 200 ? await getLocationResponse.json() : null;
-      console.log(location);
-
-      if (!location) {
+      let locationFound = getLocationResponse.status === 200 ? await getLocationResponse.json() : null;
+      let locationCreated = false;
+      
+      if (!locationFound) {
         const newLocation = { name: locationEntered, userId: userId };
         const newLocationResponse = await fetch(`${Endpoints.POSTNewLocation}`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(newLocation)
         });
-        location = await newLocationResponse.json();
+        locationFound = await newLocationResponse.json();
+        locationCreated = true;
       }
-            
-      const newEntry = { UserId: `${userId}`, LocationId: `${location.id}`, Date: `${newDateString}T00:00:00.000Z`}
-      const newTransactionResponse = await fetch(`${Endpoints.POSTNewTransaction}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newEntry)
-      });
+      
+      // check to see if the location exists    
+      const getTransactionResponse = await fetch(`${Endpoints.GETTransactionByDateAndUser}?userid=${userId}&date=${newDateString}T00:00:00.000Z`);
+      const transaction = getTransactionResponse.status === 200 ? await getTransactionResponse.json() : null;
+      let newTransactionResponse = null;
+
+      if (transaction) {          
+        const updateEntry = { Id: `${transaction.id}`, UserId: `${userId}`, LocationId: `${locationFound.id}`, Date: `${newDateString}T00:00:00.000Z`}
+        newTransactionResponse = await fetch(`${Endpoints.PUTTransaction}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(updateEntry)
+        });
+      } else {        
+        const newEntry = { UserId: `${userId}`, LocationId: `${locationFound.id}`, Date: `${newDateString}T00:00:00.000Z`}
+        newTransactionResponse = await fetch(`${Endpoints.POSTNewTransaction}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newEntry)
+        });
+      }            
     
-      // If second API call fails, rollback the first API call
-      if (!newTransactionResponse.ok) {
+      // If write to transaction fails and a location was created, rollback the location that was created
+      if (!newTransactionResponse.ok && locationCreated) {
         await fetch(`${Endpoints.DELETELocation}`, { method: 'DELETE' });
       }
-    
-      // Return the result of the second API call
+          
       return newTransactionResponse.json();
     } catch (error) {
       console.error(error);
@@ -86,6 +99,7 @@ const CalendarDay = ({day, date}) => {
     // if submission is empty, null or undefined, then ignore
     if (!locationEntered) return;
     await submitLocation(locationEntered);
+    // refresh the location statement
     setTriggerEffect(!triggerEffect);
   }
 

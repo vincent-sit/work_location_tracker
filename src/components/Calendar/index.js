@@ -52,7 +52,7 @@ const SetCalendarDays = (days) => {
 
 const Calendar = (props) => {
   return (
-    <div className="calendar">
+    <div className="calendar">      
       <CalendarHeader days={props.days}/>      
       <div className="days"> 
         {SetCalendarDays(props.days)}
