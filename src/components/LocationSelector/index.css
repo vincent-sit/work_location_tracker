@@ -1,0 +1,25 @@
+.alert {
+  all :initial;
+  position: absolute;  
+  top: 10%;
+  left: 0;
+  right: 0;
+  margin: auto;
+  width: 20%;
+  height: 30%;
+  padding: 1rem;
+  background-color: white;  
+  font-size: 1.2rem;
+  text-align: center;
+  z-index: 9999;
+  border: 1px solid #ccc;
+  border-radius: 1%;
+  box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.2) ,0px 3px 7px rgba(0, 0, 0, 0.1);
+
+}
+
+.closeButton {
+  position: absolute;
+  right: 0;
+  padding-right: 1.5rem;
+}

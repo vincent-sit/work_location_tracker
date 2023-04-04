@@ -1,0 +1,28 @@
+* {
+  margin: 0;
+  border: 0;
+}
+
+body {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  font-family: "DINPro", "Helvetica Neue", sans-serif;
+  padding: 3rem;
+  margin: 0;
+  background: #fafafa;
+  box-sizing: border-box;
+  height: 100vh;
+}
+
+#greeting {
+  position: relative;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 2rem;
+}
