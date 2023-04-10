@@ -1,42 +1,43 @@
-const path = require('path');
-const HtmlWebPackPlugin = require('html-webpack-plugin');
+import { resolve as _resolve, join } from 'path';
+import HtmlWebPackPlugin from 'html-webpack-plugin';
 
-module.exports = {
-  output: {
-    path: path.resolve(__dirname, 'build'),
-    filename: 'bundle.js',
+export const output = {
+  path: _resolve(__dirname, 'build'),
+  filename: 'bundle.js',
+};
+
+export const resolve = {
+  modules: [join(__dirname, 'src'), 'node_modules'],
+  alias: {
+    react: join(__dirname, 'node_modules', 'react'),
   },
-  resolve: {
-    modules: [path.join(__dirname, 'src'), 'node_modules'],
-    alias: {
-      react: path.join(__dirname, 'node_modules', 'react'),
+};
+
+export const module = {
+  rules: [
+    {
+      test: /\.(js|jsx)$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+      },
     },
-  },
-  module: {
-    rules: [
-      {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: {
-          loader: 'babel-loader',
+    {
+      test: /\.css$/,
+      use: [
+        {
+          loader: 'style-loader',
         },
-      },
-      {
-        test: /\.css$/,
-        use: [
-          {
-            loader: 'style-loader',
-          },
-          {
-            loader: 'css-loader',
-          },
-        ],
-      },
-    ],
-  },
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: './src/index.html',
-    }),
+        {
+          loader: 'css-loader',
+        },
+      ],
+    },
   ],
 };
+
+export const plugins = [
+  new HtmlWebPackPlugin({
+    template: './src/index.html',
+  }),
+];

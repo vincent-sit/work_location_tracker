@@ -14,12 +14,12 @@ const App = () => {
     <NavbarProvider>
       <UserIdProvider userId={id}>
         <NavBar/>
-        {/* <UserProfile /> */}
+        
         <Routes>
-        {/* renders the homepage component */}
-        <Route path="/" element={<LandingPage />} />
-        <Route path="/profile" element={<UserProfile />} />
-      </Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/profile" element={<UserProfile />} />
+        </Routes>
+
       </UserIdProvider>
     </NavbarProvider>
 )};
