@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState } from "react";
 
 const UserIdContext = createContext({
-  userId: "",
+  userId: undefined,
   setUserId: () => {}
 });
 
