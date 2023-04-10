@@ -7,6 +7,7 @@ const Endpoints = {
   GETLocationsByUser : `${url}/locations/userId`,
   GETUser: "",
   GETTransactionByDateAndUser: `${url}/userlocation/dateanduser`,
+  GETTransactionsBetweenDates: `${url}/userlocation/entriesbetweendates`,
   POSTNewLocation: `${url}/locations`,
   POSTNewTransaction: `${url}/userlocation`,
   PUTTransaction: `${url}/userlocation`,
