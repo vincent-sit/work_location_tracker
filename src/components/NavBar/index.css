@@ -1,11 +1,16 @@
 li {
   list-style-type: none; /* Remove bullets */
-  padding: 20% 20% 20% 20%; /* Remove padding */
+  padding: 10% 10% 10% 10%; /* Remove padding */
   margin: 0; /* Remove margins */
+}
+
+
+.link-item {
   width: 10em;
   display: flex;  
   align-items: center;
   gap: 1em;
+  text-decoration: none;  
 }
 
 .li-items {
@@ -49,4 +54,11 @@ ul {
 
 .list-icon:hover {
   cursor: pointer;
+}
+
+.placeholder-icon {
+  display: flex;
+  justify-content: center;  
+  align-content: center;
+  margin-top: 10em;
 }
