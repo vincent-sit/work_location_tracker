@@ -1,15 +1,27 @@
 import React from 'react';
 import { UserIdProvider } from './contexts/UserIdContext';
+import { NavbarProvider } from './contexts/NavbarContext';
 import "./App.css";
 import UserProfile from './pages/UserProfile';
+import LandingPage from "./pages/LandingPage"
+import NavBar from './components/NavBar';
+import {Routes, Route} from 'react-router-dom';
 
 const App = () => {
-  const id = "9c99490d-e90c-406f-84af-edd0b70cea04";
+  const id = "3";
 
   return (
-    <UserIdProvider userId={id}>
-      <UserProfile />
-    </UserIdProvider>
+    <NavbarProvider>
+      <UserIdProvider userId={id}>
+        <NavBar/>
+        {/* <UserProfile /> */}
+        <Routes>
+        {/* renders the homepage component */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/profile" element={<UserProfile />} />
+      </Routes>
+      </UserIdProvider>
+    </NavbarProvider>
 )};
 
 export default App;
