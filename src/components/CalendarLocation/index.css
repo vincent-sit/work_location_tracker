@@ -1,0 +1,13 @@
+.location {
+  display: flex;
+  align-self: center;  
+  justify-content: center;
+  width: 80%;
+  background-color: #fafafa;
+  border: 1px solid #ccc;
+  border-radius: 8%;
+  /* box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.2) ,0px 3px 7px rgba(0, 0, 0, 0.1); */
+  padding: 0.5em;
+  margin-top: 25%;
+
+}
