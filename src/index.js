@@ -6,7 +6,7 @@ import App from './App';
 
 const root = createRoot(document.getElementById('root'));
 root.render(  
-  <BrowserRouter >
+  <BrowserRouter basename='/work_location_tracker'>
     <App/>
   </BrowserRouter>  
 );
