@@ -1,4 +1,5 @@
 {
+  "homepage": "vincent-sit.github.io/<REPO_NAME>",
   "name": "user-interface",
   "version": "1.0.0",
   "description": "The web user interface where user can come in and log their location and track where the team is going to be working",
@@ -6,12 +7,15 @@
   "scripts": {
     "start": "webpack-dev-server --mode=development --open --hot",
     "build": "webpack --mode=production",
-    "test": "jest"
+    "test": "jest",
+    "predeploy": "npm run build", 
+    "deploy": "gh-pages -d build"
   },
   "author": "Vincent Sit",
   "license": "ISC",
   "dependencies": {
     "@phosphor-icons/react": "^2.0.8",
+    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0"
