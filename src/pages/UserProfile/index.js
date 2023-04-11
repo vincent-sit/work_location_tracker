@@ -1,9 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import { useUserId } from '../../contexts/UserIdContext';
-import {Calendar} from '../../components/Calendar';
 import "./index.css";
-import Endpoints from '../../apiEndpoints';
+import { useUserId } from '../../contexts/UserIdContext';
 import { useNavbarOpen } from '../../contexts/NavbarContext';
+import { useAlert } from '../../contexts/AlertContext';
+import Endpoints from '../../apiEndpoints';
+import {Calendar} from '../../components/Calendar';
+import Alert from '../../components/Alert';
 
 const UserProfile = () => {
   const [userDisplayName, setUserDisplayName] = useState("user");
@@ -12,6 +14,7 @@ const UserProfile = () => {
   const [includeWeekends, setIncludeWeekends] = useState(false);
   const {userId} = useUserId();
   const {isNavbarOpen} = useNavbarOpen();
+  const {isAlertOn} = useAlert();
   
   // useEffect to get displayName from user ID and update displayName
   useEffect(() => {
@@ -45,7 +48,8 @@ const UserProfile = () => {
   
   return (
     <>      
-      <div className={isNavbarOpen ? "grayout" : ""}></div>
+      {/* {isAlertOn ? <Alert alertId="submitButton" question="What location will you be working from?"/> : null} */}
+      <div className={isNavbarOpen || isAlertOn ? "grayout" : ""}></div>
       <div>
           <h1 id="greeting">Hi {userDisplayName}, where are you working for the next {daysToShow} days?</h1>        
         <Calendar daysToShow={daysToShow} includeWeekends={includeWeekends}/>

@@ -1,10 +1,9 @@
-import React, {useState} from "react";
-import {Link} from 'react-router-dom';
+import React from "react";
 import "./index.css";
-import { X, House, User, Gear, UsersThree } from "@phosphor-icons/react";
+import { X, House, User, Gear, UsersThree, Placeholder } from "@phosphor-icons/react";
 import { List } from "@phosphor-icons/react";
 import { useNavbarOpen } from '../../contexts/NavbarContext';
-import UserProfile from "../../pages/UserProfile";
+import NavBarItem from "../NavBarItems";
 
 
 // onhover, rotates one way, when leaving, rotates the other
@@ -43,26 +42,21 @@ const NavBar = () => {
         </div>
         <ul>
           <li>
-            <Link to="/">
-              <House size={32} />
-              <span>Landing Page</span>
-            </Link>
+            <NavBarItem icon={<House size={32} />} text="Landing Page" linkTo="/"/>
           </li>
           <li>
-            <Link to="/profile">
-              <User size={32} />
-              <span>Profile</span>
-            </Link>
+            <NavBarItem icon={<User size={32} />} text="Profile" linkTo="/profile"/>
           </li>
           <li>
-            <UsersThree size={32} />
-            <span>Teams</span>
+            <NavBarItem icon={<UsersThree size={32} />} text="Teams" linkTo="/profile"/>
           </li>
           <li>
-            <Gear size={32} />
-            <span>Setting</span>
+            <NavBarItem icon={<Gear size={32} />} text="Setting" linkTo="/profile"/>
           </li>
-        </ul>        
+        </ul>
+        <div className="placeholder-icon">
+          <Placeholder size={128} />
+        </div>
       </nav>
       
     )
