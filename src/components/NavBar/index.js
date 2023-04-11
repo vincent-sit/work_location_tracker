@@ -42,16 +42,16 @@ const NavBar = () => {
         </div>
         <ul>
           <li>
-            <NavBarItem icon={<House size={32} />} text="Landing Page" linkTo="/"/>
+            <NavBarItem icon={<House size={32} />} text="Landing Page" linkTo="/work_location_tracker"/>
           </li>
           <li>
-            <NavBarItem icon={<User size={32} />} text="Profile" linkTo="/profile"/>
+            <NavBarItem icon={<User size={32} />} text="Profile" linkTo="/work_location_tracker/profile"/>
           </li>
           <li>
-            <NavBarItem icon={<UsersThree size={32} />} text="Teams" linkTo="/profile"/>
+            <NavBarItem icon={<UsersThree size={32} />} text="Teams" linkTo="/work_location_tracker/profile"/>
           </li>
           <li>
-            <NavBarItem icon={<Gear size={32} />} text="Setting" linkTo="/profile"/>
+            <NavBarItem icon={<Gear size={32} />} text="Setting" linkTo="/work_location_tracker/profile"/>
           </li>
         </ul>
         <div className="placeholder-icon">
