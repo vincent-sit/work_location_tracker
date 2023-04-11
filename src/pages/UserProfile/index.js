@@ -48,7 +48,6 @@ const UserProfile = () => {
   
   return (
     <>      
-      {/* {isAlertOn ? <Alert alertId="submitButton" question="What location will you be working from?"/> : null} */}
       <div className={isNavbarOpen || isAlertOn ? "grayout" : ""}></div>
       <div>
           <h1 id="greeting">Hi {userDisplayName}, where are you working for the next {daysToShow} days?</h1>        

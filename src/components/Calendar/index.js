@@ -97,6 +97,12 @@ const Calendar = (props) => {
   const [lastDay, setLastDay] = useState(new Date());    
   const [dataForGeneratingCards, setDataForGeneratingCards] = useState([]);
   const {userId} = useUserId();
+  const [isCalendarReady, setIsCalendarReady] = useState(false);
+
+  function renderCalendarDays() {
+    setIsCalendarReady(true);
+    return SetCalendarDays(dataForGeneratingCards);
+  }
 
   useEffect(() => {
     async function getDataWithinTimeRange(newLastDay) {
@@ -118,6 +124,7 @@ const Calendar = (props) => {
         console.error(error);
       }
     };
+
     const newLastDay = getLastDay(new Date(), props.daysToShow, props.includeWeekends);
     setLastDay(newLastDay);
     

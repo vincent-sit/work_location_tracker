@@ -48,7 +48,7 @@ const NavBar = () => {
             <NavBarItem icon={<User size={32} />} text="Profile" linkTo="/work_location_tracker/profile"/>
           </li>
           <li>
-            <NavBarItem icon={<UsersThree size={32} />} text="Teams" linkTo="/work_location_tracker/profile"/>
+            <NavBarItem icon={<UsersThree size={32} />} text="Teams" linkTo="/profile"/>
           </li>
           <li>
             <NavBarItem icon={<Gear size={32} />} text="Setting" linkTo="/work_location_tracker/profile"/>
