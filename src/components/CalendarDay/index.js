@@ -38,7 +38,7 @@ const CalendarDay = (props) => {
       } catch (error) {
       }
     }
-    if (!isFirstRendered.current) {
+    if (!isFirstRendered.current) {      
       getNewLocationId();
     }
   }, [triggerEffect]);

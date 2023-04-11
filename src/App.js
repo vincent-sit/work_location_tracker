@@ -1,6 +1,7 @@
 import React from 'react';
 import { UserIdProvider } from './contexts/UserIdContext';
 import { NavbarProvider } from './contexts/NavbarContext';
+import { AlertProvider } from './contexts/AlertContext';
 import "./App.css";
 import UserProfile from './pages/UserProfile';
 import LandingPage from "./pages/LandingPage"
@@ -13,12 +14,13 @@ const App = () => {
   return (
     <NavbarProvider>
       <UserIdProvider userId={id}>
-        <NavBar/>
-        
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/profile" element={<UserProfile />} />
-        </Routes>
+        <AlertProvider>
+          <NavBar/>
+          <Routes>
+            <Route path="/" Component={LandingPage} />
+            <Route path="profile" Component={UserProfile} />
+          </Routes>
+        </AlertProvider>
 
       </UserIdProvider>
     </NavbarProvider>
