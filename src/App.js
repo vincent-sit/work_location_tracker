@@ -16,9 +16,9 @@ const App = () => {
       <UserIdProvider userId={id}>
         <AlertProvider>
           <NavBar/>
-          <Routes>
-            <Route path="/work_location_tracker" Component={LandingPage} />
-            <Route path="/work_location_tracker/profile" Component={UserProfile} />
+          <Routes basename='/work_location_tracker'>
+            <Route path="/" Component={LandingPage} />
+            <Route path="/profile" Component={UserProfile} />
           </Routes>
         </AlertProvider>
 
