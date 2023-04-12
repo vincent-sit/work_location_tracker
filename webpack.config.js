@@ -5,7 +5,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     publicPath: '/work_location_tracker/build/',
-    filename: 'bundle.js',    
+    filename: 'bundle.js',
   },
   resolve: {
     modules: [path.join(__dirname, 'src'), 'node_modules'],
@@ -37,7 +37,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: './public/index.html',
+      template: './index.html',
     }),
   ],
   devServer: {
