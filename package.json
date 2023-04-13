@@ -1,4 +1,5 @@
-{  
+{
+  "homepage": "vincent-sit.github.io/work_location_tracker",
   "name": "user-interface",
   "version": "1.0.0",
   "description": "The web user interface where user can come in and log their location and track where the team is going to be working",
