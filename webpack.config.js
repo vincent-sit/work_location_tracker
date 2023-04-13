@@ -3,8 +3,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   output: {
-    path: path.resolve(__dirname, 'build'),
-    publicPath: '/work_location_tracker/build/',
+    path: path.resolve(__dirname, 'build'),    
     filename: 'bundle.js',
   },
   resolve: {
@@ -39,10 +38,5 @@ module.exports = {
     new HtmlWebPackPlugin({
       template: './index.html',
     }),
-  ],
-  devServer: {
-    historyApiFallback: {
-      rewrites: [{ from: /\//, to: '/404.html' }],
-    },
-  },
+  ]
 };
