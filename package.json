@@ -5,7 +5,7 @@
   "description": "The web user interface where user can come in and log their location and track where the team is going to be working",
   "main": "index.js",
   "scripts": {
-    "start": "webpack-dev-server --mode=development --open --hot",
+    "start": "webpack-dev-server --mode=development --open-page work_location_tracker --hot",
     "build": "webpack --mode=production",
     "test": "jest",
     "predeploy": "npm run build", 

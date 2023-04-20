@@ -6,7 +6,7 @@ import App from './App';
 
 const root = createRoot(document.getElementById('root'));
 root.render(  
-  <HashRouter>
+  <HashRouter basename='/work_location_tracker'>
     <App/>
   </HashRouter>  
 );
