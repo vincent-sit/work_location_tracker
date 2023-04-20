@@ -17,8 +17,9 @@ const App = () => {
         <AlertProvider>
           <NavBar/>
           <Routes >
-            <Route path="/" Component={LandingPage} />
-            <Route path="/profile" Component={UserProfile} />
+            <Route path="/" Component={LandingPage} />            
+            <Route path="*" Component={LandingPage} />
+            <Route path="profile" Component={UserProfile} />
           </Routes>
         </AlertProvider>
 
